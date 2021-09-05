@@ -1,6 +1,8 @@
 //Esto lo exporto para que me autocomplete las opciones de las respuestas de expres, es redundante.
 const { response, request } = require('express');
 
+const User = require('../models/user');
+
 const usersGet = (req = request, res = response) => {
 
     //la query es la informacion que se manda en la url.
@@ -13,14 +15,16 @@ const usersGet = (req = request, res = response) => {
     });
 };
 
-const usersPost = (req = request, res = response) => {
+const usersPost = async(req = request, res = response) => {
 
-    const { nombre, apellido } = req.body;
+    const body = req.body;
+    const user = new User(body);
+
+    await user.save()
 
     res.json({
         msg: 'Esto es una peticion POST desde controller',
-        nombre,
-        apellido
+        user
     });
 };
 

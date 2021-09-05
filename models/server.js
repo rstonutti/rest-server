@@ -1,5 +1,8 @@
 const express = require('express');
 
+//Importo conexion a la base de datos desde carpeta database.
+const { dbConecction } = require('../database/config');
+
 //NOTA: paquete cors, sirve para que las peticiones vengan de url que nosotros designemos, sirve como seguridad
 //Es un middleware, no olvidarme.
 
@@ -9,6 +12,9 @@ class Server {
         this.app = express();
         this.port = process.env.PORT; //Hago uso de la variable de entorno que estan en .env
         this.usuariosPath = '/api/user'; //Esto sirve para que una persona que no conoce mi codigo pueda ver rapidamente mis rutas.
+
+        //Conectar a la base de datos
+        this.conectarDB();
 
         //Middlewares.
         this.middlewares();
@@ -31,8 +37,11 @@ class Server {
     routes() {
         //Esto es un middleware que llamada a las rutas.
         this.app.use(this.usuariosPath, require('../routes/user.routes')) //Primer argumento designa la ruta de la url, el segundo el importa las rutas de la carpeta routes.
+    };
 
-
+    //Haciendo la conexión de esta manera podemos tener varias conexiones ya sea de desarollo o producción.
+    async conectarDB(){
+        await dbConecction();
     };
 
     listen() {
