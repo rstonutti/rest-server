@@ -1,0 +1,1 @@
+Nota: Los comentarios y anotaciones son ayuda memorias o herramientas que quizas me ayuden mas adelante, no les den mucha importancia si hay cosas de más.
